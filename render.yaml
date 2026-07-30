@@ -1,0 +1,48 @@
+services:
+  - type: web
+    name: scholarify
+    env: php
+    plan: free
+    buildCommand: composer install --no-dev --optimize-autoloader && php artisan config:clear && php artisan route:clear && php artisan view:clear
+    startCommand: php artisan serve --host 0.0.0.0 --port $PORT
+    envVars:
+      - key: APP_ENV
+        value: production
+      - key: APP_KEY
+        generateValue: true
+      - key: APP_DEBUG
+        value: false
+      - key: LOG_CHANNEL
+        value: stack
+      - key: DB_CONNECTION
+        value: pgsql
+      - key: DB_HOST
+        fromService:
+          type: postgres
+          name: scholarify-db
+          property: host
+      - key: DB_PORT
+        fromService:
+          type: postgres
+          name: scholarify-db
+          property: port
+      - key: DB_DATABASE
+        fromService:
+          type: postgres
+          name: scholarify-db
+          property: database
+      - key: DB_USERNAME
+        fromService:
+          type: postgres
+          name: scholarify-db
+          property: user
+      - key: DB_PASSWORD
+        fromService:
+          type: postgres
+          name: scholarify-db
+          property: password
+
+  - type: postgres
+    name: scholarify-db
+    plan: free
+    ipAllowList: []

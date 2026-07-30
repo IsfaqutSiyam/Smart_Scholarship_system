@@ -1,4 +1,3 @@
-[README.md](https://github.com/user-attachments/files/30562206/README.md)
 # Scholarify
 
 <p align="center">
